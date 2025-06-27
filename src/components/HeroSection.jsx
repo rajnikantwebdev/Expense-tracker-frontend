@@ -1,6 +1,3 @@
-import { FaRupeeSign} from "react-icons/fa";
-import { MdSavings } from "react-icons/md";
-
 export default function HeroSection() {
   return (
     <div className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen flex items-center justify-center overflow-hidden">

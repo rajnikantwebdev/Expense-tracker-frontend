@@ -1,3 +1,4 @@
+import { Pencil } from "lucide-react";
 export default function Navbar() {
   return (
     <nav className="shadow-md border-b border-gray-200">
@@ -9,9 +10,10 @@ export default function Navbar() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center space-x-8">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              Add expense
+          <div>
+            <button className="flex items-center text-lg gap-2 cursor-pointer">
+              <span>Add expense</span>
+              <Pencil className="w-5" />
             </button>
           </div>
         </div>
