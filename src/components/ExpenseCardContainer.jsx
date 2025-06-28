@@ -1,49 +1,48 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ExpenseCard from "./ExpenseCard";
-const ExpenseCardContainer = () => {
-    const [userExpense, setUserExpense] = useState([]);
 
-    useEffect(() => {
-        const getUserExpenseList = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/api/expenses")
-                console.log("response: ", response)
-                if(response.status === 200) {
-                    console.log("setting data")
-                    console.log(response?.data?.data);
-                    setUserExpense(response?.data?.data)
-                }
-            } catch (error) {
-                console.log("error while fetching expenses, try again later", error)
-            }
-        }
-        getUserExpenseList()
-    }, [])
+const ExpenseCardContainer = ({refresh}) => {
+  const [userExpense, setUserExpense] = useState([]);
 
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Your Expenses
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {userExpense.length !== 0 
-            ? (
-                userExpense.map((expense) => {
-                    return (
-                      <ExpenseCard
-                        description={expense.description}
-                        amount={expense.amount}
-                      />
-                    );
-                })
-            ) : <div>No Data Found</div>
+  useEffect(() => {
+    const getUserExpenseList = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/expenses");
+        console.log("response: ", response);
+        if (response.status === 200) {
+          setUserExpense(response?.data?.data);
         }
-          </div>
+      } catch (error) {
+        console.log("error while fetching expenses, try again later", error);
+      }
+    };
+    getUserExpenseList();
+  }, [refresh]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          Your Expenses
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {userExpense.length !== 0 ? (
+            userExpense.map((expense) => {
+              return (
+                <ExpenseCard
+                  description={expense.description}
+                  amount={expense.amount}
+                />
+              );
+            })
+          ) : (
+            <div>No Data Found</div>
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default ExpenseCardContainer
