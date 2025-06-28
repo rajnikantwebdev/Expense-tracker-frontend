@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { X, DollarSign, FileText, Plus } from "lucide-react";
 import axios from "axios"
+import { IndianRupee } from "lucide-react";
+import {toast, ToastContainer} from "react-toastify"
 
 const AddExpenseModal = ({ isOpen, onClose, setRefresh }) => {
   const [formData, setFormData] = useState({
@@ -36,7 +38,17 @@ const AddExpenseModal = ({ isOpen, onClose, setRefresh }) => {
       if(response.status === 201) {
         setRefresh((prev) => !prev)
         onClose()
-        alert("Expense added")
+        toast("💰 Expense Added Successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setFormData({description:"", amount:""})
         setErrors(null)
       }
     } catch (error) {
@@ -95,12 +107,12 @@ const AddExpenseModal = ({ isOpen, onClose, setRefresh }) => {
               htmlFor="amount"
               className="flex items-center space-x-2 text-sm font-semibold text-gray-700"
             >
-              <DollarSign className="w-4 h-4 text-gray-500" />
+              <IndianRupee className="w-4 h-4 text-gray-500" />
               <span>Amount</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span className="text-gray-500 text-lg">$</span>
+                <span className="text-gray-500 text-sm">Rs.</span>
               </div>
               <input
                 type="number"
@@ -109,7 +121,7 @@ const AddExpenseModal = ({ isOpen, onClose, setRefresh }) => {
                 value={formData.amount}
                 onChange={handleInputChange}
                 placeholder="0.00"
-                step="0.01"
+                step="1"
                 min="0"
                 className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
                 required

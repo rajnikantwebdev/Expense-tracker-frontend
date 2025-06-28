@@ -6,7 +6,7 @@ import { RefreshContext } from "./ContextApi";
 const ExpenseCardContainer = () => {
   const [userExpense, setUserExpense] = useState([]);
   const {refresh} = useContext(RefreshContext)
-  
+
   useEffect(() => {
     const getUserExpenseList = async () => {
       try {
@@ -41,7 +41,11 @@ const ExpenseCardContainer = () => {
               );
             })
           ) : (
-            <div>No Data Found</div>
+            <div className="w-ful">
+              <div className="w-full text-center">
+                <span className="text-xl font-bold">No Expense Hooray!</span>
+              </div>
+            </div>
           )}
         </div>
       </div>

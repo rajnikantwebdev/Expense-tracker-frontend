@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { HandCoins } from "lucide-react";
 import { useContext } from "react";
 import { RefreshContext } from "./ContextApi";
+import { toast } from "react-toastify";
 
 export default function ExpenseCard({ description, amount, expenseId }) {
   const {setRefresh} = useContext(RefreshContext)
@@ -17,7 +18,16 @@ export default function ExpenseCard({ description, amount, expenseId }) {
       );
       if(response.status === 200) {
         setRefresh(prev => !prev)
-        alert("Expense Deleted Successfully")
+        toast("📈 Expense Deleted Successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.log("Unalbe to delte Expense, try again later")
@@ -75,7 +85,7 @@ export default function ExpenseCard({ description, amount, expenseId }) {
 
         <button
           onClick={(e) => handleExpenseDelete(e)}
-          className="absolute right-5 bottom-5"
+          className="absolute right-5 bottom-5 cursor-pointer"
         >
           {/* <BsFillTrash3Fill className="text-red-500" /> */}
           <Trash2 className="text-red-500" />
