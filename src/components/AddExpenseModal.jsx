@@ -29,7 +29,10 @@ const AddExpenseModal = ({ isOpen, onClose, setRefresh }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/expenses", formData)
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/expenses`,
+        formData
+      );
       if(response.status === 201) {
         setRefresh((prev) => !prev)
         onClose()

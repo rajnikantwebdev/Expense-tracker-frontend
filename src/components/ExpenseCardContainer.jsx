@@ -1,14 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ExpenseCard from "./ExpenseCard";
+import { RefreshContext } from "./ContextApi";
 
-const ExpenseCardContainer = ({refresh}) => {
+const ExpenseCardContainer = () => {
   const [userExpense, setUserExpense] = useState([]);
-
+  const {refresh} = useContext(RefreshContext)
+  
   useEffect(() => {
     const getUserExpenseList = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/expenses");
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/expenses`);
         console.log("response: ", response);
         if (response.status === 200) {
           setUserExpense(response?.data?.data);
@@ -31,6 +33,8 @@ const ExpenseCardContainer = ({refresh}) => {
             userExpense.map((expense) => {
               return (
                 <ExpenseCard
+                  key={expense.id}
+                  expenseId={expense.id}
                   description={expense.description}
                   amount={expense.amount}
                 />

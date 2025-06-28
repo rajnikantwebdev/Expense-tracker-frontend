@@ -5,12 +5,11 @@ import HeroSection from './components/HeroSection'
 import Navbar from './components/Navbar'
 
 function App() {
-    const [refresh, setRefresh] = useState(false);
   return (
     <main>
-      <Navbar setRefresh={setRefresh} />
+      <Navbar />
       <HeroSection />
-      <ExpenseCardContainer refresh={refresh} />
+      <ExpenseCardContainer />
     </main>
   );
 }

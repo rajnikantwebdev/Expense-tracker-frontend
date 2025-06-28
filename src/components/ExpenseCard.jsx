@@ -1,8 +1,28 @@
+import axios from "axios";
 import { IndianRupee } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { HandCoins } from "lucide-react";
+import { useContext } from "react";
+import { RefreshContext } from "./ContextApi";
 
-export default function ExpenseCard({ description, amount }) {
+export default function ExpenseCard({ description, amount, expenseId }) {
+  const {setRefresh} = useContext(RefreshContext)
+
+  const handleExpenseDelete = async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/expenses/${expenseId}`
+      );
+      if(response.status === 200) {
+        setRefresh(prev => !prev)
+        alert("Expense Deleted Successfully")
+      }
+    } catch (error) {
+      console.log("Unalbe to delte Expense, try again later")
+    }
+  }
   return (
     <div className="relative group">
       <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-white/90">
@@ -53,10 +73,13 @@ export default function ExpenseCard({ description, amount }) {
         `}
         ></div>
 
-        <div className="absolute right-5 bottom-5">
+        <button
+          onClick={(e) => handleExpenseDelete(e)}
+          className="absolute right-5 bottom-5"
+        >
           {/* <BsFillTrash3Fill className="text-red-500" /> */}
           <Trash2 className="text-red-500" />
-        </div>
+        </button>
       </div>
     </div>
   );
